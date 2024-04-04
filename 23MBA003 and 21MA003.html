@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Image Classification</h1>
+        <h2>With MobileNet and ml5.js</h2>
+        <div id="result">Scanning ...</div>
+        <img id="image" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QA7RXhpZgAASUkqAAgAAAABAA4BAgAZAAAAGgAAAAAAAAAiQ29icmEsS2luZyBDb2JyYSxTbmFrZSwi/+0AaFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAABLHAJQAAtiZW56aW5lZm90bxwCeAAZIkNvYnJhLEtpbmcgQ29icmEsU25ha2UsIhwCbgAYR2V0dHkgSW1hZ2VzL2lTdG9ja3Bob3RvAP/hAwZodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvAAk8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgoJCTxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6SXB0YzR4bXBDb3JlPSJodHRwOi8vaXB0Yy5vcmcvc3RkL0lwdGM0eG1wQ29yZS8xLjAveG1sbnMvIiB4bWxuczpHZXR0eUltYWdlc0dJRlQ9Imh0dHA6Ly94bXAuZ2V0dHlpbWFnZXMuY29tL2dpZnQvMS4wLyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwbHVzPSJodHRwOi8vbnMudXNlcGx1cy5vcmcvbGRmL3htcC8xLjAvIiB4bWxuczppcHRjRXh0PSJodHRwOi8vaXB0Yy5vcmcvc3RkL0lwdGM0eG1wRXh0LzIwMDgtMDItMjkvIiBwaG90b3Nob3A6Q3JlZGl0PSJHZXR0eSBJbWFnZXMvaVN0b2NrcGhvdG8iIEdldHR5SW1hZ2VzR0lGVDpBc3NldElEPSIxNzczMzQzNzYiID4KPGRjOmNyZWF0b3I+PHJkZjpTZXE+PHJkZjpsaT5iZW56aW5lZm90bzwvcmRmOmxpPjwvcmRmOlNlcT48L2RjOmNyZWF0b3I+PGRjOmRlc2NyaXB0aW9uPjxyZGY6QWx0PjxyZGY6bGkgeG1sOmxhbmc9IngtZGVmYXVsdCI+JnF1b3Q7Q29icmEsS2luZyBDb2JyYSxTbmFrZSwmcXVvdDs8L3JkZjps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" width="50%">
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <script>
+        // Initialize Image Classifier with MobileNet.
+        const classifier = ml5.imageClassifier('MobileNet');
+        classifier.classify(document.getElementById("image"), gotResult);
+        // Function to run when results arrive
+        function gotResult(error, results) {
+            const element = document.getElementById("result");
+            if (error) {
+                element.innerHTML = error;
+            } else {
+                let num = results[0].confidence * 100;
+                element.innerHTML = results[0].label + "<br>Confidence: " + num.toFixed(2) + "%";
+            }
+        }
+    </script>
+</body>
+</html>
